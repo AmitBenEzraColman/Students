@@ -8,39 +8,36 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-
 class StudentAdapter(
-    private val students: List<Student>,
-    private val onItemClick: (Student) -> Unit
-) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
+    private val studentList: List<Student>,
+    private val onStudentClick: (Student) -> Unit
+) : RecyclerView.Adapter<StudentAdapter.StudentListViewHolder>() {
 
-    inner class StudentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val studentId: TextView = itemView.findViewById(R.id.studentId)
-        val studentCheckbox: CheckBox = itemView.findViewById(R.id.studentCheckbox)
-        val studentImage: ImageView = itemView.findViewById(R.id.studentImage)
-        val studentName: TextView = itemView.findViewById(R.id.studentName)
-
+    inner class StudentListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val textStudentId: TextView = itemView.findViewById(R.id.studentId)
+        val checkboxStudent: CheckBox = itemView.findViewById(R.id.studentCheckbox)
+        val imageStudent: ImageView = itemView.findViewById(R.id.studentImage)
+        val textStudentName: TextView = itemView.findViewById(R.id.studentName)
     }
 
+    override fun onBindViewHolder(holder: StudentListViewHolder, position: Int) {
+        val currentStudent = studentList[position]
+        holder.imageStudent.setImageResource(currentStudent.image)
+        holder.textStudentName.text = currentStudent.name
+        holder.textStudentId.text = currentStudent.id
+        holder.checkboxStudent.isChecked = currentStudent.isChecked
 
-    override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
-        val student = students[position]
-        holder.studentImage.setImageResource(student.image)
-        holder.studentName.text = student.name
-        holder.studentId.text = student.id
-        holder.studentCheckbox.isChecked = student.isChecked
-
-        holder.studentCheckbox.setOnCheckedChangeListener { _, isChecked ->
-            student.isChecked = isChecked
+        holder.checkboxStudent.setOnCheckedChangeListener { _, isChecked ->
+            currentStudent.isChecked = isChecked
         }
 
-        holder.itemView.setOnClickListener { onItemClick(student) }
+        holder.itemView.setOnClickListener { onStudentClick(currentStudent) }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentListViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.student_item, parent, false)
-        return StudentViewHolder(view)
+        return StudentListViewHolder(view)
     }
 
-    override fun getItemCount() = students.size
+    override fun getItemCount() = studentList.size
 }

@@ -17,52 +17,47 @@ public class EditStudentActivity : AppCompatActivity() {
             title = "Student Details"
         }
 
-        val studentId = intent.getStringExtra("studentId")
-        val student = MainActivity.students.find { it.id == studentId } ?: return
+        val selectedStudentId = intent.getStringExtra("studentId")
+        val selectedStudent = MainActivity.students.find { it.id == selectedStudentId } ?: return
 
-        val nameInput = findViewById<EditText>(R.id.nameInput)
-        val idInput = findViewById<EditText>(R.id.idInput)
-        val phoneInput = findViewById<EditText>(R.id.phoneInput)
-        val addressInput = findViewById<EditText>(R.id.addressInput)
-        val saveButton = findViewById<Button>(R.id.saveButton)
-        val deleteButton = findViewById<Button>(R.id.deleteButton)
-        val cancelButton = findViewById<Button>(R.id.cancelButton)
+        val inputName = findViewById<EditText>(R.id.nameInput)
+        val inputId = findViewById<EditText>(R.id.idInput)
+        val inputPhone = findViewById<EditText>(R.id.phoneInput)
+        val inputAddress = findViewById<EditText>(R.id.addressInput)
+        val buttonSave = findViewById<Button>(R.id.saveButton)
+        val buttonDelete = findViewById<Button>(R.id.deleteButton)
+        val buttonCancel = findViewById<Button>(R.id.cancelButton)
 
-        nameInput.setText(student.name)
-        idInput.setText(student.id)
-        phoneInput.setText(student.phoneNumber)
-        addressInput.setText(student.address)
+        inputName.setText(selectedStudent.name)
+        inputId.setText(selectedStudent.id)
+        inputPhone.setText(selectedStudent.phoneNumber)
+        inputAddress.setText(selectedStudent.address)
 
+        buttonSave.setOnClickListener {
+            selectedStudent.name = inputName.text.toString()
+            selectedStudent.id = inputId.text.toString()
+            selectedStudent.phoneNumber = inputPhone.text.toString()
+            selectedStudent.address = inputAddress.text.toString()
 
-        saveButton.setOnClickListener {
-            student.name = nameInput.text.toString()
-            student.id = idInput.text.toString()
-            student.phoneNumber = phoneInput.text.toString()
-            student.address = addressInput.text.toString()
-
-            val intent = Intent(this, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
-            finish()
+            navigateToMainActivity()
         }
 
-        deleteButton.setOnClickListener {
-            MainActivity.students.remove(student)
-
-            val intent = Intent(this, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
-            finish()
+        buttonDelete.setOnClickListener {
+            MainActivity.students.remove(selectedStudent)
+            navigateToMainActivity()
         }
 
-        cancelButton.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
-            finish()
+        buttonCancel.setOnClickListener {
+            navigateToMainActivity()
         }
     }
 
+    private fun navigateToMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+        finish()
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
