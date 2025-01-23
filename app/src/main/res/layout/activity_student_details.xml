@@ -8,7 +8,7 @@
 
     <!-- Student Image -->
     <ImageView
-        android:id="@+id/studentImage"
+        android:id="@+id/studentImg"
         android:layout_width="128dp"
         android:layout_height="128dp"
         android:layout_gravity="center"
@@ -53,7 +53,7 @@
         android:layout_marginTop="8dp">
 
         <ImageView
-            android:id="@+id/checkIcon"
+            android:id="@+id/checkedIcon"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_check"

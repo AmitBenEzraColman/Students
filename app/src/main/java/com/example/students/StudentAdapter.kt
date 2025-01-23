@@ -16,13 +16,13 @@ class StudentAdapter(
     inner class StudentListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textStudentId: TextView = itemView.findViewById(R.id.studentId)
         val checkboxStudent: CheckBox = itemView.findViewById(R.id.studentCheckbox)
-        val imageStudent: ImageView = itemView.findViewById(R.id.studentImage)
+        val studentImg: ImageView = itemView.findViewById(R.id.studentImg)
         val textStudentName: TextView = itemView.findViewById(R.id.studentName)
     }
 
     override fun onBindViewHolder(holder: StudentListViewHolder, position: Int) {
         val currentStudent = studentList[position]
-        holder.imageStudent.setImageResource(currentStudent.image)
+        holder.studentImg.setImageResource(currentStudent.image)
         holder.textStudentName.text = currentStudent.name
         holder.textStudentId.text = currentStudent.id
         holder.checkboxStudent.isChecked = currentStudent.isChecked

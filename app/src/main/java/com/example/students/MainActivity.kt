@@ -11,9 +11,30 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
     companion object {
         val students = mutableListOf(
-            Student("1", "Yarin", false, R.drawable.ic_student_placeholder, "123-456-7890", "123 Main St"),
-            Student("2", "Amit", true, R.drawable.ic_student_placeholder, "987-654-3210", "456 Main St"),
-            Student("3", "Bobi", false, R.drawable.ic_student_placeholder, "555-555-5555", "789 Mai St")
+            Student(
+                "1",
+                "Yarin",
+                false,
+                R.drawable.ic_student_placeholder,
+                "123-456-7890",
+                "123 Main St"
+            ),
+            Student(
+                "2",
+                "Amit",
+                true,
+                R.drawable.ic_student_placeholder,
+                "987-654-3210",
+                "456 Main St"
+            ),
+            Student(
+                "3",
+                "Bobi",
+                false,
+                R.drawable.ic_student_placeholder,
+                "555-555-5555",
+                "789 Mai St"
+            )
         )
     }
 
@@ -28,8 +49,27 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
+        supportActionBar?.apply {
+            title = "Students App"
+        }
+
+        recyclerView = findViewById(R.id.recyclerViewStudents)
+        val fabAddStudent = findViewById<FloatingActionButton>(R.id.fabAddStudent)
+
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = StudentAdapter(students) { student ->
+            val intent = Intent(this, StudentDetailsActivity::class.java)
+            intent.putExtra("studentId", student.id)
+            startActivity(intent)
+        }
+        recyclerView.adapter = adapter
+
+        fabAddStudent.setOnClickListener {
+            val intent = Intent(this, AddStudentActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
-
 

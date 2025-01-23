@@ -8,7 +8,7 @@
 
     <!-- Student Image -->
     <ImageView
-        android:id="@+id/studentImage"
+        android:id="@+id/studentImg"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginEnd="8dp"
